@@ -1,0 +1,16 @@
+# Enable Fastbootd service
+service fastbootd /sbin/fastbootd
+    class main
+    console
+    disabled
+    seclabel u:r:recovery:s0
+
+on property:sys.usb.ffs.ready=1
+    start fastbootd
+
+# Example init.recovery.rc
+on property:sys.powerctl=fastboot
+    reboot fastboot
+
+on property:sys.powerctl=fastbootd
+    reboot fastbootd
